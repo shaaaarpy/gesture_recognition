@@ -24,9 +24,31 @@ def loadImages():
 
 
 image_array,shape_array,label_array=loadImages()
-print(image_array)
-print(shape_array)
-print(label_array)
+print(image_array.shape)
+print(shape_array.shape)
+print(label_array.shape)
+
+n_images=len(image_array)
+for i in range(1):
+	len_image=len(image_array[i])
+	for j in range(len_image):
+		if(image_array[i][j]==3 or image_array[i][j]==2):
+			image_array[i][j]=255
+		else:
+			image_array[i][j]=0 
+	
+
+print(1)
+print(image_array.shape)
+
+ind=0
+for i in image_array:
+	ir=i.reshape(shape_array[ind][0], shape_array[ind][1])
+	scipy.misc.toimage(ir).save('./maps/'+str(ind)+'.png')
+	ind+=1
+
+
+#print(segment_images_shapes[leng-1])
 
 # img = cv.imread('./dataset5/A/f/color_5_0009.png',0)
 # depth=cv.imread('./dataset5/A/f/depth_5_0009.png',0)
@@ -47,5 +69,3 @@ print(label_array)
 # ind=1
 # ir=img_r.reshape(img.shape[0], img.shape[1])
 # scipy.misc.toimage(ir).save('./maps/'+str(ind)+'.png')
-
-
