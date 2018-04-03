@@ -13,21 +13,20 @@ from sklearn.model_selection import train_test_split
 def loadImages():
 	image_array_ravel = []
 	label_array_ravel = []
-	base='./dataset5/A/'
+	base='test/'
 	directories=os.listdir(base)
 	directories.sort()
 	#print(directories)
 	counter=0
 	for folder in directories:
 		for filename in os.listdir(base+folder):
-			if 'color' in filename:
+			if 'depth' in filename:
 				img = cv.imread(base+folder+'/'+filename,0)
-				img = cv.resize(img, dsize=(73, 128), interpolation=cv.INTER_CUBIC)
+				# img = cv.resize(img, dsize=(73, 128), interpolation=cv.INTER_CUBIC)
 				img=np.array(img)
 				image_array_ravel.append(img.ravel())
 				label_array_ravel.append(folder)
 	return np.array(image_array_ravel),np.array(label_array_ravel)
-
 
 image_array_ravel,label_array_ravel=loadImages()
 print(image_array_ravel.shape)
@@ -41,7 +40,7 @@ pca_train = PCA.fit(x_train)
 comp=pca_train.components_.T
 pca_train=np.dot(x_train, comp)
 pca_test=np.dot(x_test, comp)
-classif = DecisionTreeClassifier()
+classif = RandomForestClassifier()
 classif.fit(pca_train, y_train)
 print(classif.score(pca_test,y_test))
 
